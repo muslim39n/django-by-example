@@ -2,6 +2,7 @@ import email
 from django.db import models
 from django.utils import timezone
 from django.urls import reverse
+from taggit.managers import TaggableManager
 
 from django.contrib.auth.models import User
 
@@ -27,6 +28,7 @@ class Post(models.Model):
     status = models.CharField(max_length=10,
                                 choices=STATUS_CHOICES,
                                 default='draft')
+    tags = TaggableManager()
 
     objects = models.Manager()
     published = PublishedManager()
@@ -42,6 +44,8 @@ class Post(models.Model):
                                             self.publish.month,
                                             self.publish.day,
                                             self.slug])
+
+                                        
 
 class Comment(models.Model):
     post = models.ForeignKey(Post,
